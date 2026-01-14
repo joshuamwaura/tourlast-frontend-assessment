@@ -1041,123 +1041,7 @@
     </div>
 </section>
 
-{{-- Popular apartments (if any) --}}
-{{-- @if ($apartmentPopularQuery && $apartmentPopularQuery->isNotEmpty())
-    <section class="" id="apartmentPopularQuery">
-        <div class="container">
-            <div class="popular_features_sec">
-                <div class="popular_features_tab">
-                    <div class="main_tiltle">
-                        <h3>Popular apartment</h3>
-                        <p>Your perfect stay, at the best price</p>
-                    </div>
-                </div>
 
-                <div class="swiper mySwiper apartments-swiper">
-                    <div class="swiper-wrapper">
-                        @foreach ($apartmentPopularQuery as $itemApartment)
-                            <div class="swiper-slide">
-                                <div class="popular_features_item">
-                                    <a href="{{ route('booking.user.apartment_details', ['slug_url' => base64_encode($itemApartment->id)]) }}">
-                                        <div class="popular_hotel_img">
-                                            <img src="{{ asset($itemApartment->thumbnail) }}" alt="">
-                                        </div>
-                                    </a>
-                                    <div class="popular_hotel_content">
-                                        <div class="hotel_review">
-                                            <span><img src="{{ asset('booking/img/star.svg') }}" alt="">5/5</span>
-                                            <span>{{ $itemApartment->reviews->count() ?? '' }} reviews</span>
-                                        </div>
-                                        <div class="popular_features_title feature_price">
-                                            <h4>{{ $itemApartment->apartment_name ?? '' }}</h4>
-                                            <div class="price_box">
-                                                <span>From</span>
-                                                <h5>${{ number_format($itemApartment->main_price, 0) ?? '' }}</h5>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        @endforeach
-                    </div>
-                    <!-- Add pagination/navigation if needed -->
-                </div>
-            </div>
-        </div>
-    </section>
-@endif --}}
-
-{{-- Popular hotels (if any) --}}
-{{-- @if ($hotelPopularQuery && $hotelPopularQuery->isNotEmpty())
-    <section class="" id="hotelPopularQuery">
-        <div class="container">
-            <div class="popular_features_sec">
-                <div class="popular_features_tab">
-                    <div class="main_tiltle">
-                        <h3>Popular hotel</h3>
-                        <p>Explore, book, save – best hotels worldwide</p>
-                    </div>
-                </div>
-
-                <div class="swiper mySwiper hotels-swiper">
-                    <div class="swiper-wrapper">
-                        @foreach ($hotelPopularQuery as $itemD)
-                            <div class="swiper-slide">
-                                <div class="popular_features_item">
-                                    <a href="{{ route('booking.user.hotel_listing_details', ['slug_url' => base64_encode($itemD->id)]) }}">
-                                        <div class="popular_hotel_img">
-                                            <img src="{{ asset($itemD->thumbnail) }}" alt="">
-                                        </div>
-                                    </a>
-                                    <div class="popular_hotel_content">
-                                        <div class="hotel_review">
-                                            <span><img src="{{ asset('booking/img/star.svg') }}" alt="">{{ $itemD->rating_star . '/5' }}</span>
-                                            <span>{{ $itemD->reviews->count() ?? '' }} reviews</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        @endforeach
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-@endif --}}
-<!-- Popular Attractions - Hotels Grid -->
-{{-- @if ($hotelPopularQuery && $hotelPopularQuery->isNotEmpty())
-    <section class="" id="hotelPopularQuery">
-        <div class="container">
-            <div class="main_tiltle">
-                <h3>Popular Attractions</h3>
-                <p>Explore, book, save – best hotels worldwide</p>
-            </div>
-
-            <div class="popular_grid">
-                @foreach ($hotelPopularQuery as $hotel)
-                    <div class="popular_item">
-                        <a href="{{ route('booking.user.hotel_listing_details', ['slug_url' => base64_encode($hotel->id)]) }}?destination={{ urlencode($hotel->location) }}&latitude={{ $hotel->latitude }}&longitude={{ $hotel->longitude}}&check_in_d={{ date('D d M') }}&check_out_d={{ date('D d M', strtotime('+1 day')) }}&check_in={{ date('Y-m-d') }}&check_out={{ date('Y-m-d', strtotime('+1 day')) }}&adult=1+Adult%2C+0+Child%2C+0+Infant%2C+1+Room&adultsCount=1&childrenCount=0&infantsCount=0&roomsCount=1&parent_search=1&pageCount=1&_token={{ csrf_token() }}&hotel=hotel">
-                            <div class="popular_item_img">
-                                <img src="{{ asset($hotel->thumbnail) }}" alt="{{ $hotel->hotel_name }}">
-                            </div>
-                            <div class="popular_item_content">
-                                <div class="item_rating">
-                                    <span class="stars">★ {{ $hotel->rating_star }}/5</span>
-                                    <span>{{ $hotel->reviews->count() ?? '0' }} reviews</span>
-                                </div>
-                                <h5>{{ $hotel->hotel_name }}</h5>
-                                <div class="item_price">
-                                    <span class="label">From</span>
-                                    <span class="price">${{ number_format($hotel->minimum_price, 0) }}</span>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                @endforeach
-            </div>
-        </div>
-    </section>
-@endif --}}
 @if ($hotelPopularQuery && $hotelPopularQuery->isNotEmpty())
     <section id="hotelPopularQuery">
         <div class="container">
@@ -1181,10 +1065,9 @@
                         <div class="popular_item">
 
                             <a href="#">
-
                                 <!-- Image -->
                                 <div class="popular_item_img">
-                                    <img src="{{ asset($hotel->thumbnail) }}" alt="{{ $hotel->hotel_name }}">
+                                    <img src="{{ asset('booking/img/popular-destination.jpg') }}" alt="{{ $hotel->hotel_name }}">
 
                                     <!-- Like Button -->
                                     <button type="button" class="like-btn" onclick="toggleLike(event, this)">
@@ -1314,14 +1197,12 @@
                                 <a href="#">
                                     <div class="popular_features_item">
                                         <div class="popular_hotel_img">
-                                            <img src="{{ asset($itemsApartmentD->thumbnail) }}" alt="">
+                                            <img src="{{ asset('booking/img/beach.jpg') }}" alt="">
                                         </div>
                                         <div class="popular_hotel_content">
                                             <div class="hotel_review">
                                                 <span><img src="{{ asset('booking/img/star.svg') }}"
                                                         alt="">5/5</span>
-                                                {{--  <span>{{ $itemsApartmentD->reviews->count() ?? '' }}
-                                                    reviews</span>  --}}
                                             </div>
 
                                             <div class="popular_features_title feature_price">
@@ -1349,67 +1230,6 @@
 </section>
 
 
-<!-- Why Choose Tourlast -->
-{{-- <section class=" why_choose_sec">
-    <div class="container">
-        <div class="main_tiltle">
-            <h3>Why choose Tourlast</h3>
-            <p>Your trusted partner for seamless travel experiences</p>
-        </div>
-
-        <div class="why_grid">
-            <div class="why_item">
-                <div class="why_icon">📱</div>
-                <h5>Easy Booking</h5>
-                <p>Book your travel deals in just a few clicks</p>
-            </div>
-
-            <div class="why_item">
-                <div class="why_icon">💰</div>
-                <h5>Best Price Guarantee</h5>
-                <p>Get the most competitive prices</p>
-            </div>
-
-            <div class="why_item">
-                <div class="why_icon">🌐</div>
-                <h5>Worldwide Coverage</h5>
-                <p>Destinations across the globe</p>
-            </div>
-
-            <div class="why_item">
-                <div class="why_icon">🔒</div>
-                <h5>Secure Payment</h5>
-                <p>Protected with encryption</p>
-            </div>
-
-            <div class="why_item">
-                <div class="why_icon">💬</div>
-                <h5>24/7 Support</h5>
-                <p>Always available to assist</p>
-            </div>
-        </div>
-
-        <!-- App Download Section -->
-        <div class="app_download_area">
-            <div class="app_info">
-                <h4>Get Our Travel Deals On the App</h4>
-                <p>Download the app and book your next adventure on the go</p>
-                <div class="app_buttons">
-                    <img src="{{ asset('booking/img/app-store.png') }}" alt="App Store">
-                    <img src="{{ asset('booking/img/google-play.png') }}" alt="Google Play">
-                </div>
-            </div>
-            <div class="qr_area">
-                <div class="qr_code">
-                    <span>📱</span>
-                </div>
-                <p>Scan to Download App</p>
-            </div>
-        </div>
-    </div>
-</section> --}}
-
-
 {{-- Attractions / apartments / app promo (only once) --}}
 @if ($citiesQuery && $citiesQuery->isNotEmpty())
     @php
@@ -1417,42 +1237,6 @@
     @endphp
     {{-- attractionsHotel content here (kept identical to original) --}}
 @endif
-
-{{-- <section class="container">
-    <div class="tourist-app-promo-clean">
-        <div class="app-promo-grid phone-card">
-            <div>
-                <img src="{{ asset('booking/img/appsection.png') }}" alt="Tourist App">
-            </div>
-
-            <div class="promo-text ">
-                <h1 class="display-4 fw-bold text-dark mb-2">Our Best Travel Deals<br>Live in the App</h1>
-                <p class="lead text-secondary mb-1">Get exclusive access to app-only discounts, faster bookings,<br>and real-time price alerts.</p>
-                <p class="text-dark mb-2">Scan the QR Code or download the app to start exploring<br>smarter, cheaper travel with <strong class="text-success">Tourlast</strong>.</p>
-
-                <div class="store-buttons d-flex justify-content-center gap-4">
-                    <a href="#" class="store-btn"><img src="{{ asset('booking/img/googleplay.png') }}" alt="Get it on Google Play" height="60"></a>
-                    <a href="#" class="store-btn"><img src="{{ asset('booking/img/appstore.png') }}" alt="Download on the App Store" height="60"></a>
-                </div>
-            </div>
-
-            <div class="promo-badges d-flex flex-column gap-5 justify-content-center">
-                <div class="badge-simple d-flex align-items-center gap-3">
-                    <img src="{{ asset('booking/img/people_svg.png') }}" alt="Rating" width="48">
-                    <div><strong class="fs-3 text-dark">4.8</strong><div class="text-muted">App Rating</div></div>
-                </div>
-                <div class="badge-simple d-flex align-items-center gap-3">
-                    <img src="{{ asset('booking/img/star_svg.png') }}" alt="Downloads" width="48">
-                    <div><strong class="fs-3 text-dark">100k+</strong><div class="text-muted">Downloads</div></div>
-                </div>
-                <div class="badge-simple d-flex align-items-center gap-3">
-                    <img src="{{ asset('booking/img/secure-payment.png') }}" alt="Secure" width="48">
-                    <div class="text-muted">Secure & Verified App</div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section> --}}
 
 <section class="app-promo-modern">
     <div class="container">
@@ -1492,7 +1276,6 @@
 
     </div>
 </section>
-
 
 <section class="trust-features-section">
     <div class="container">
