@@ -1,7 +1,13 @@
 # Tourlast Landing Page – Popular Attractions Section
 
 ## Overview
+This project contains the landing page for Tourlast. Once you pull you should be able to run it and see this.
 
+Clone it then do:
+composer install on the project
+then change or create the .env file 
+then run composer dump-autoload
+ 
 The **Popular Attractions** section is a key feature on the Tourlast landing page, designed to showcase curated hotel options and encourage user engagement. This section aims to highlight popular, highly-rated hotels worldwide in an interactive, visually appealing format.
 
 ---
