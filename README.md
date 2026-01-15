@@ -81,6 +81,8 @@ The section should pull hotel data via **JSON** for testing. JSON files will be 
 - Ensure proper handling when no data is available:
   - Display placeholders or fallback messages/images
 
+- It's ok if you do not finish everything within the set time. We want to see how far you can go.
+
 ---
 
 **Good luck!**
