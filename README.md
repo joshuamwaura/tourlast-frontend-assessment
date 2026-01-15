@@ -1,59 +1,92 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Tourlast Landing Page – Popular Attractions Section
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## Overview
 
-## About Laravel
+The **Popular Attractions** section is a key feature on the Tourlast landing page, designed to showcase curated hotel options and encourage user engagement. This section aims to highlight popular, highly-rated hotels worldwide in an interactive, visually appealing format.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+---
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Section Requirements
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### 1. Card Layout
 
-## Learning Laravel
+Each hotel should be displayed as a **card** with the following information:
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+- Hotel name
+- Rating (stars)
+- Number of reviews
+- Minimum price (starting price)
+- Thumbnail image of the hotel
+- Optional: like/favorite button for user interaction
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+**Notes:**
 
-## Laravel Sponsors
+- Cards should maintain a consistent height and width to ensure a visually cohesive grid or carousel layout.
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+---
 
-### Premium Partners
+### 2. Interactive Carousel/Grid
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+The card section should support either:
 
-## Contributing
+- **Horizontal carousel/slider**, allowing users to scroll through multiple cards
+- **Responsive grid layout**, adjusting the number of visible cards based on screen size
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Additional requirements:
 
-## Code of Conduct
+- Include **navigation arrows** to allow users to browse left/right in a carousel
+- Support **touch gestures** for mobile devices
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+---
 
-## Security Vulnerabilities
+### 3. Design & Visual Guidelines
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+- Use high-quality, engaging images for the hotels
+- Highlight key details prominently:
+  - Hotel name and rating should be visible at first glance
+  - Price should be clearly displayed
+- Include subtle hover effects:
+  - Card shadow or scale on hover
+  - Highlight rating stars or "favorite" button
+- Maintain alignment with **Tourlast branding** (colors, typography, and iconography)
 
-## License
+---
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+### 4. Responsiveness
+
+The section must be fully responsive:
+
+- **Desktop:** multiple cards visible (4–5 per row)
+- **Tablet:** medium number of cards (2–3 per row)
+- **Mobile:** single card per view with horizontal scrolling
+
+---
+
+### 5. Optional Enhancements
+
+- Display badges for “Popular” or “Top Rated” hotels
+- Implement smooth transition animations for carousel movements
+- Include an accessible design (ARIA attributes, keyboard navigation)
+
+---
+
+## Data Integration
+
+The section should pull hotel data via **JSON** for testing. JSON files will be provided, and setting them up is part of the assessment.
+
+**Example fields:**
+
+- `hotel_name`
+- `rating_star`
+- `reviews_count` → use a random generator for this
+- `minimum_price`
+- `thumbnail`
+
+**Notes:**
+
+- Ensure proper handling when no data is available:
+  - Display placeholders or fallback messages/images
+
+---
+
+**Good luck!**
