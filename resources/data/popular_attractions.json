@@ -1,0 +1,23 @@
+[
+  {
+    "hotel_name": "Sunset Resort",
+    "rating_star": 4.5,
+    "reviews_count": 120,
+    "minimum_price": 150,
+    "thumbnail": "images/134018008289705643.jpg"
+  },
+  {
+    "hotel_name": "Oceanview Hotel",
+    "rating_star": 4.8,
+    "reviews_count": 200,
+    "minimum_price": 180,
+    "thumbnail": "images/134030130089379513.jpg"
+  },
+  {
+    "hotel_name": "Mountain Retreat",
+    "rating_star": 4.6,
+    "reviews_count": 90,
+    "minimum_price": 120,
+    "thumbnail": "images/133996696164837547.jpg"
+  }
+]
