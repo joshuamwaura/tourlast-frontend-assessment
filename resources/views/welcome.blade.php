@@ -855,29 +855,38 @@
 </style>
 <section class="main_banner">
     @php
-        $hotelPopularQuery = App\Models\Hotel::with('amenity')
-            ->whereIn('rating_star', [5, 4, 3])
-            ->where('is_popular', '1')
+        use Illuminate\Support\Facades\Storage;
+
+        $hotels = collect(json_decode(Storage::get('/hotels.json'), true));
+        //dd($hotels);
+        $rooms = collect(json_decode(Storage::get('/hotel_rooms.json'), true));
+        $images = collect(json_decode(Storage::get('/hotel_images.json'), true));
+        $ptAmenities = collect(json_decode(Storage::get('/pt_amenities.json'), true));
+        $amenities = collect(json_decode(Storage::get('/amenities.json'), true));
+
+        $hotelPopularQuery = $hotels
+            ->whereIn('rating_star', [3, 4, 5])
+            ->where('is_popular', 1)
             ->where('status', 'Active')
-            ->where('hotel_status', '1')
-            ->inRandomOrder()
-            ->limit(5)
-            ->get();
+            ->shuffle()
+            ->take(5)
+            ->map(function ($hotel) use ($rooms, $images, $ptAmenities, $amenities) {
+                $hotel['rooms'] = $rooms->where('hotel_id', $hotel['id'])->values();
 
-        $homeQuery = App\Models\Pages::first();
-        $queryData = $homeQuery ? json_decode($homeQuery->content, true) : [];
+                $hotel['images'] = $images
+                    ->where('type', 'hotel')
+                    ->whereIn('hotel_room_id', $hotel['rooms']->pluck('id'))
+                    ->values();
 
-        $citiesQuery = App\Models\Cities::where('type', 'hotel')->where('status', 'Active')->get();
-        $citiesApartmentQuery = App\Models\Cities::where('type', 'apartment')->where('status', 'Active')->get();
+                $hotel['amenity'] = $ptAmenities
+                    ->where('pt_id', $hotel['id'])
+                    ->map(fn($pt) => $amenities->firstWhere('id', $pt['amenity_id']))
+                    ->values();
 
-        $apartmentPopularQuery = App\Models\Apartment::with('amenity')
-            ->where('is_popular', '1')
-            ->where('status', 'Active')
-            ->where('apartment_status', '1')
-            ->inRandomOrder()
-            ->limit(5)
-            ->get();
+                return $hotel;
+            });
     @endphp
+
 
     <div class="banner_sec">
         <div class="container">
@@ -1041,7 +1050,6 @@
     </div>
 </section>
 
-
 @if ($hotelPopularQuery && $hotelPopularQuery->isNotEmpty())
     <section id="hotelPopularQuery">
         <div class="container">
@@ -1051,52 +1059,42 @@
                 <p>Explore, book, save – best hotels worldwide</p>
             </div>
 
-            <!-- Carousel Wrapper -->
             <div class="popular-carousel">
 
-                <!-- Left Arrow -->
                 <button class="popular-arrow left" onclick="scrollPopular(-1)">
                     <i class="fa-solid fa-chevron-left"></i>
                 </button>
 
-                <!-- Grid -->
                 <div class="popular_grid" id="popularGrid">
                     @foreach ($hotelPopularQuery as $hotel)
                         <div class="popular_item">
-
                             <a href="#">
-                                <!-- Image -->
                                 <div class="popular_item_img">
-                                    <img src="{{ asset('booking/img/popular-destination.jpg') }}" alt="{{ $hotel->hotel_name }}">
+                                    <img src="{{ asset($hotel['thumbnail']) }}" alt="{{ $hotel['hotel_name'] }}">
 
-                                    <!-- Like Button -->
-                                    <button type="button" class="like-btn" onclick="toggleLike(event, this)">
+                                    <button type="button" class="like-btn">
                                         <i class="fa-regular fa-heart"></i>
                                     </button>
-
                                 </div>
 
-                                <!-- Content -->
                                 <div class="popular_item_content">
                                     <div class="item_rating">
-                                        <span class="stars">★ {{ $hotel->rating_star }}/5</span>
-                                        <span>{{ $hotel->reviews()->count() ?? '0' }} reviews</span>
+                                        <span class="stars">★ {{ $hotel['rating_star'] }}/5</span>
+                                        <span>{{ $hotel['reviews_count'] ?? rand(10, 80) }} reviews</span>
                                     </div>
 
-                                    <h5>{{ $hotel->hotel_name }}</h5>
+                                    <h5>{{ $hotel['hotel_name'] }}</h5>
 
                                     <div class="item_price">
                                         <span class="label">From</span>
-                                        <span class="price">${{ number_format($hotel->minimum_price, 0) }}</span>
+                                        <span class="price">${{ number_format($hotel['minimum_price'], 0) }}</span>
                                     </div>
                                 </div>
-
                             </a>
                         </div>
                     @endforeach
                 </div>
 
-                <!-- Right Arrow -->
                 <button class="popular-arrow right" onclick="scrollPopular(1)">
                     <i class="fa-solid fa-chevron-right"></i>
                 </button>
@@ -1105,9 +1103,6 @@
         </div>
     </section>
 @endif
-
-
-
 
 <section class="attractionsApartment" id="attractionsApartment">
     <div class="container">
@@ -1120,32 +1115,32 @@
 
                 <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
 
-                    @if ($citiesApartmentQuery && $citiesApartmentQuery->isNotEmpty())
-                        @php
-                            $citiesApartmentQuery1 = App\Models\Cities::where('type', 'apartment')
-                                ->where('status', 'Active')
-                                ->first();
-                            $selectedCity =
-                                request('city') ?? ($citiesApartmentQuery1 ? $citiesApartmentQuery1->name : '');
-                        @endphp
+                    @php
+                        $cities = collect(json_decode(\Illuminate\Support\Facades\Storage::get('/cities.json'), true));
 
+                        $citiesApartmentQuery = $cities
+                            ->where('type', 'apartment')
+                            ->where('status', 'Active')
+                            ->values();
+
+                        $citiesApartmentQuery1 = $citiesApartmentQuery->first();
+                        $selectedCity = request('city') ?? ($citiesApartmentQuery1['name'] ?? '');
+                    @endphp
+
+                    @if ($citiesApartmentQuery->isNotEmpty())
                         @foreach ($citiesApartmentQuery as $key => $itemApartmentQuery)
-                            {{-- <a href="{{ route('booking.user.apartment_details', ['slug_url' => base64_encode($itemApartmentQuery->id)]) }}?destination_apartment={{ urlencode($itemApartmentQuery->location) }}&latitude_apartment={{ $itemApartmentQuery->latitude }}&longitude_apartment={{ $itemApartmentQuery->longitude }}&check_in_apartment_d={{date('D d M')}}&check_out_apartment_d={{ date('D d M', strtotime('+1 day')) }}&check_in_apartment={{date('Y-m-d')}}&check_out_apartment={{ date('Y-m-d', strtotime('+1 day')) }}&adultsCountApartment=1&parent_search=1&pageCount=1&_token={{ csrf_token() }}&apartment=apartment"> --}}
                             <li class="nav-item" role="presentation">
-                                <a class="nav-link {{ $selectedCity == $itemApartmentQuery->name ? 'active' : '' }}"
+                                <a class="nav-link {{ $selectedCity == $itemApartmentQuery['name'] ? 'active' : '' }}"
                                     id="pills-tabs{{ $key }}-tab" href="#" role="tab"
                                     aria-controls="pills-tabs{{ $key }}"
-                                    aria-selected="{{ request('city') == $itemApartmentQuery->name ? 'true' : 'false' }}">
-                                    {{ $itemApartmentQuery->name ?? '' }}
+                                    aria-selected="{{ $selectedCity == $itemApartmentQuery['name'] ? 'true' : 'false' }}">
+                                    {{ $itemApartmentQuery['name'] }}
                                 </a>
                             </li>
-                            {{-- </a> --}}
                         @endforeach
                     @endif
                 </ul>
-
             </div>
-
             <div class="tab-content" id="pills-tabContent">
 
                 <div class="tab-pane fade show active" id="pills-tabs1" role="tabpanel"
@@ -1153,43 +1148,59 @@
 
                     <swiper-container class="popularfeatures_sld myswip_tb11" slides-per-view="4" space-between="15"
                         free-mode="true">
+
                         @php
-                            $citiesApartmentQueryfirst2 = App\Models\Cities::where('type', 'apartment')
+
+                            /* Load JSON */
+                            $cities = collect(
+                                json_decode(\Illuminate\Support\Facades\Storage::get('/cities.json'), true),
+                            );
+
+                            $apartments = collect(
+                                json_decode(\Illuminate\Support\Facades\Storage::get('/apartments.json'), true),
+                            );
+
+                            /* First active apartment city */
+                            $citiesApartmentQueryfirst2 = $cities
+                                ->where('type', 'apartment')
                                 ->where('status', 'Active')
                                 ->first();
-                            $apartmentPopularsQuery = App\Models\Apartment::with('amenity')
-                                ->where('apartment_status', '1')
-                                // ->whereDate('toDateValidity', '>=', date('Y-m-d'))
-                                ->inRandomOrder();
 
-                            if (request('latitude') && request('longitude')) {
-                                $latitude = request('latitude');
-                                $longitude = request('longitude');
-                                $radius = 100; // 100 km
+                            /* Fallback coordinates */
+                            $latitude = request('latitude') ?? ($citiesApartmentQueryfirst2['latitude'] ?? 0);
+                            $longitude = request('longitude') ?? ($citiesApartmentQueryfirst2['longitude'] ?? 0);
+                            $radius = 100; // km
 
-                                $apartmentPopularsQuery->whereRaw(
-                                    "
-                                    (6371 * acos(cos(radians(?)) * cos(radians(latitude))
-                                    * cos(radians(longitude) - radians(?)) + sin(radians(?))
-                                    * sin(radians(latitude))))
-< ?",
-                                    [$latitude, $longitude, $latitude, $radius],
-                                );
-                            } else {
-                                $latitude = $citiesApartmentQueryfirst2->latitude;
-                                $longitude = $citiesApartmentQueryfirst2->longitude;
-                                $radius = 100; // 100 km
+                            /* Haversine distance calculation */
+                            $apartmentPopularsQuery = $apartments
+                                ->where('apartment_status', 1)
+                                ->filter(function ($apartment) use ($latitude, $longitude, $radius) {
+                                    $earthRadius = 6371;
 
-                                $apartmentPopularsQuery->whereRaw(
-                                    "
-                                    (6371 * acos(cos(radians(?)) * cos(radians(latitude))
-                                    * cos(radians(longitude) - radians(?)) + sin(radians(?))
-                                    * sin(radians(latitude)))) < ?",
-                                    [$latitude, $longitude, $latitude, $radius],
-                                );
-                            }
+                                    $latFrom = deg2rad($latitude);
+                                    $lonFrom = deg2rad($longitude);
+                                    $latTo = deg2rad($apartment['latitude']);
+                                    $lonTo = deg2rad($apartment['longitude']);
 
-                            $apartmentPopularsQuery = $apartmentPopularsQuery->limit(5)->get();
+                                    $latDelta = $latTo - $latFrom;
+                                    $lonDelta = $lonTo - $lonFrom;
+
+                                    $angle =
+                                        2 *
+                                        asin(
+                                            sqrt(
+                                                pow(sin($latDelta / 2), 2) +
+                                                    cos($latFrom) * cos($latTo) * pow(sin($lonDelta / 2), 2),
+                                            ),
+                                        );
+
+                                    $distance = $angle * $earthRadius;
+
+                                    return $distance <= $radius;
+                                })
+                                ->shuffle()
+                                ->take(5)
+                                ->values();
                         @endphp
 
                         @foreach ($apartmentPopularsQuery as $itemsApartmentD)
@@ -1197,20 +1208,23 @@
                                 <a href="#">
                                     <div class="popular_features_item">
                                         <div class="popular_hotel_img">
-                                            <img src="{{ asset('booking/img/beach.jpg') }}" alt="">
+                                            <img src="{{ $itemsApartmentD['thumbnail'] }}" alt="">
                                         </div>
+
                                         <div class="popular_hotel_content">
                                             <div class="hotel_review">
-                                                <span><img src="{{ asset('booking/img/star.svg') }}"
-                                                        alt="">5/5</span>
+                                                <span>
+                                                    <img src="{{ asset('booking/img/star.svg') }}" alt="">
+                                                    5/5
+                                                </span>
                                             </div>
 
                                             <div class="popular_features_title feature_price">
-                                                <h4>{{ $itemsApartmentD->apartment_name ?? '' }}</h4>
+                                                <h4>{{ $itemsApartmentD['apartment_name'] ?? '' }}</h4>
+
                                                 <div class="price_box">
                                                     <span>From</span>
-                                                    <h5>${{ number_format($itemsApartmentD->main_price, 0) ?? '' }}
-                                                    </h5>
+                                                    <h5>${{ number_format($itemsApartmentD['main_price'], 0) }}</h5>
                                                 </div>
                                             </div>
                                         </div>
@@ -1218,25 +1232,13 @@
                                 </a>
                             </swiper-slide>
                         @endforeach
+
                     </swiper-container>
-
-
                 </div>
-
             </div>
-
         </div>
     </div>
 </section>
-
-
-{{-- Attractions / apartments / app promo (only once) --}}
-@if ($citiesQuery && $citiesQuery->isNotEmpty())
-    @php
-        // keep your existing city/hotel calculation logic (unchanged)
-    @endphp
-    {{-- attractionsHotel content here (kept identical to original) --}}
-@endif
 
 <section class="app-promo-modern">
     <div class="container">

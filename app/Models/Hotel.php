@@ -40,11 +40,6 @@ class Hotel extends Model
     {
         return $this->hasMany(HotelRoom::class, 'hotel_id', 'id');
     }
-
-    // public function reviews()
-    // {
-    //     return $this->hasMany(Review::class, 'relation_id', 'id')->where('order_type', 'hotel');
-    // }
     public function getThumbnailAttribute($value)
     {
         return asset('frontend/thumbnail').'/'.$value;
