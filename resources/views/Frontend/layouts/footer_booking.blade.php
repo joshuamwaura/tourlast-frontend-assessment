@@ -403,60 +403,12 @@
 <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/ion-rangeslider/2.3.0/js/ion.rangeSlider.min.js"></script>
 <script type="text/javascript"
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA8fPOCs163eUCv5uPhDQcvRMbzVTr882A&libraries=places&callback=initMap">
+    src="https://maps.googleapis.com/maps/api/js?key={{ config('services.google_maps.key') }}&libraries=places&callback=initMap">
 </script>
 
 <script>
     const storedChildrenAges = @json($childrenAges); // [3, 8, 11]
-    const storedChildrenAgesApartment = @json($childrenAgesApartment); // [3, 8, 11]
-
-    // $(document).ready(function () {
-    //     function getAgeDropdown(index, selectedValue = -1) {
-    //         let options = '<option value="-1">Age needed</option>';
-    //         for (let i = 0; i <= 17; i++) {
-    //             options += `<option value="${i}" ${i === selectedValue ? 'selected' : ''}>${i} ${i === 1 ? 'year' : 'years'} old</option>`;
-    //         }
-    //         return `
-    //             <div class="child-age-item" data-index="${index}">
-    //                 <select name="children_ages[]" class="child-age-select">
-    //                     ${options}
-    //                 </select>
-    //             </div>`;
-    //     }
-
-    //     function showDropdownsFromInput() {
-    //         let count = parseInt($('.childrenCountingNew12').val()) || 0;
-    //         const $container = $('#children_age_dropdowns');
-    //         let current = $container.find('.child-age-item').length;
-
-    //         // ✅ Add new dropdowns if needed
-    //         if (count > current) {
-    //             for (let i = current; i < count; i++) {
-    //                 $container.append(getAgeDropdown(i));
-    //             }
-    //         }
-
-    //         // ✅ Remove extra dropdowns if needed
-    //         else if (count < current) {
-    //             $container.find('.child-age-item').slice(count).remove();
-    //         }
-    //     }
-
-    //     // On page load
-    //     showDropdownsFromInput();
-
-    //     // When value changes
-    //     $('.childrenCountingNew12').on('input change', function () {
-    //         showDropdownsFromInput();
-    //     });
-
-    //     // Optional: Watch hidden field change via MutationObserver if needed
-    //     const target = document.querySelector('.childrenCountingNew12');
-    //     if (target) {
-    //         const observer = new MutationObserver(showDropdownsFromInput);
-    //         observer.observe(target, { attributes: true, attributeFilter: ['value'] });
-    //     }
-    // });
+    const storedChildrenAgesApartment = @json($childrenAgesApartment);
     $(document).ready(function() {
         function getAgeDropdown(index, selectedValue = -1) {
             let options = '<option value="-1">Age needed</option>';
@@ -960,34 +912,6 @@
     });
 </script>
 <script>
-    // function showMenu(type) {
-    //     // Show/Hide Menus
-    //     document.getElementById('flightMenu').style.display = type === 'flight' ? 'block' : 'none';
-    //     document.getElementById('propertyMenu').style.display = type === 'flight' ? 'none' : 'block';
-
-    //     // Get elements
-    //     const hotelLine = document.getElementById('hotelLine');
-    //     const flightLine = document.getElementById('flightLine');
-    //     const apartmentLine = document.getElementById('apartmentLine');
-
-    //     const attractionsApartment = document.getElementById('attractionsApartment');
-    //     const attractionsHotel = document.getElementById('attractionsHotel');
-    //     const apartmentPopularQuery = document.getElementById('apartmentPopularQuery');
-    //     const hotelPopularQuery = document.getElementById('hotelPopularQuery');
-
-    //     // Show/Hide Lines
-    //     if (hotelLine) hotelLine.style.display = (type === 'hotel' || type === 'flight') ? 'block' : 'none';
-    //     if (flightLine) flightLine.style.display = type === 'flight' ? 'block' : 'none';
-    //     if (apartmentLine) apartmentLine.style.display = (type === 'apartment' || type === 'flight') ? 'block' : 'none';
-
-    //     // Show/Hide Sections
-    //     if (attractionsHotel) attractionsHotel.style.display = (type === 'hotel' || type === 'flight') ? 'block' : 'none';
-    //     if (hotelPopularQuery) hotelPopularQuery.style.display = (type === 'hotel' || type === 'flight') ? 'block' : 'none';
-
-    //     if (attractionsApartment) attractionsApartment.style.display = (type === 'apartment' || type === 'flight') ? 'block' : 'none';
-    //     if (apartmentPopularQuery) apartmentPopularQuery.style.display = (type === 'apartment' || type === 'flight') ? 'block' : 'none';
-    // }
-
     function showMenu(type) {
         // Menus
         const flightMenu = document.getElementById('flightMenu');
@@ -1068,42 +992,6 @@
         }
     });
 
-    // function showMenu(type) {
-    //     // Show/Hide Menus
-    //     document.getElementById('flightMenu').style.display = type === 'flight' ? 'block' : 'none';
-    //     document.getElementById('propertyMenu').style.display = type === 'flight' ? 'none' : 'block';
-
-    //     // Show/Hide Lines with safety check
-    //     const hotelLine = document.getElementById('hotelLine');
-    //     const flightLine = document.getElementById('flightLine');
-    //     const apartmentLine = document.getElementById('apartmentLine');
-
-    //     const attractionsApartment = document.getElementById('attractionsApartment');
-    //     const attractionsHotel = document.getElementById('attractionsHotel');
-    //     const apartmentPopularQuery = document.getElementById('apartmentPopularQuery');
-    //     const hotelPopularQuery = document.getElementById('hotelPopularQuery');
-
-    //     if (hotelLine) hotelLine.style.display = type === 'hotel' ? 'block' : 'none';
-    //     if (flightLine) flightLine.style.display = type === 'flight' ? 'block' : 'none';
-    //     if (apartmentLine) apartmentLine.style.display = type === 'apartment' ? 'block' : 'none';
-
-    //     if (attractionsHotel) attractionsHotel.style.display = type === 'hotel' ? 'block' : 'none';
-    //     if (hotelPopularQuery) hotelPopularQuery.style.display = type === 'hotel' ? 'block' : 'none';
-
-    //     if (attractionsApartment) attractionsApartment.style.display = type === 'apartment' ? 'block' : 'none';
-    //     if (apartmentPopularQuery) apartmentPopularQuery.style.display = type === 'apartment' ? 'block' : 'none';
-
-
-    //     if (flightLine) attractionsHotel.style.display = type === 'flight' ? 'block' : 'none';
-    //     if (flightLine) hotelPopularQuery.style.display = type === 'flight' ? 'block' : 'none';
-
-    //     if (flightLine) attractionsApartment.style.display = type === 'flight' ? 'block' : 'none';
-    //     if (flightLine) apartmentPopularQuery.style.display = type === 'flight' ? 'block' : 'none';
-
-    // }
-
-
-
     $(document).ready(function() {
         $('#updateUserButton').click(function(e) {
             e.preventDefault();
@@ -1171,9 +1059,6 @@
                 let mobileValue = mobileInput.val();
                 let countryCodeValue = countryCodeInput.val();
 
-                // Disable input fields and make AJAX call
-                // mobileInput.prop('disabled', true);
-                // countryCodeInput.prop('disabled', true);
                 editIcon.data('edit', 1); // Reset state to 'not editing'
                 document.getElementById("pageLoader").style.display = "block";
                 // AJAX request to update mobile number and country code
@@ -1607,10 +1492,6 @@
         });
     });
 
-    // verifyBtn.addEventListener("click", () => {
-    //   verifyOTP();
-    // });
-
     document.addEventListener("DOMContentLoaded", () => {
         const verifyBtn1 = document.getElementById("verify-btn");
         if (verifyBtn1) {
@@ -1637,39 +1518,6 @@
             });
         }
     });
-
-    //   $(document).ready(function () {
-    //     let today = moment().format('ddd DD MMM');
-
-    //     $("#check_in_hotel_d").daterangepicker({
-    //         autoApply: true,
-    //         minDate: today,
-    //         locale: {
-    //             format: 'ddd DD MMM'
-    //         },
-    //         startDate: today,
-    //         endDate: moment().add(1, 'days') // Default checkout next day
-    //     }, function (start, end) {
-    //         // ✅ Manually input field ko update karenge
-    //         setTimeout(() => {
-    //             $("#check_in_hotel_d").val(start.format("ddd DD MMM")); // Sirf check-in date
-    //             $("#check_out_hotel_d").val(end.format("ddd DD MMM"));  // Check-out date
-    //             $("#check_in_hotel").val(start.format("YYYY-MM-DD")); // Sirf check-in date
-    //             $("#check_out_hotel").val(end.format("YYYY-MM-DD"));  // Check-out date
-    //         }, 10); // Delay to override daterangepicker's default behavior
-    //     });
-
-    //     // ✅ Check-out field pe click karne se calendar open ho
-    //     $("#check_out_hotel").on("click", function () {
-    //         $("#check_in_hotel_d").trigger("click");
-    //     });
-
-    //     $("#check_in_hotel").val("{{ request()->check_in }}");
-    //     $("#check_out_hotel").val("{{ request()->check_out }}");
-    //     $("#check_in_hotel_d").val("{{ request()->check_in_d }}");
-    //     $("#check_out_hotel_d").val("{{ request()->check_out_d }}");
-    // });
-
 
     $(document).ready(function() {
         let today = moment(); // Keep as a moment object
@@ -1709,76 +1557,6 @@
         $("#check_in_hotel_d").val("{{ request()->check_in_d }}");
         $("#check_out_hotel_d").val("{{ request()->check_out_d }}");
     });
-
-
-    // $(document).ready(function () {
-    //     let today = moment(); // Keep as a moment object
-
-    //     $("#check_in_hotel_d").daterangepicker({
-    //         autoApply: true,
-    //         minDate: today.clone(),
-    //         locale: { format: 'ddd DD MMM' },
-    //         startDate: today.clone(),
-    //         endDate: today.clone().add(1, 'days')
-    //     });
-
-    //     $('#check_in_hotel_d').on('apply.daterangepicker', function(ev, picker) {
-    //         $("#check_in_hotel_d").val(picker.startDate.format("ddd DD MMM"));
-    //         $("#check_out_hotel_d").val(picker.endDate.format("ddd DD MMM"));
-    //         $("#check_in_hotel").val(picker.startDate.format("YYYY-MM-DD"));
-    //         $("#check_out_hotel").val(picker.endDate.format("YYYY-MM-DD"));
-    //     });
-
-    //     $("#check_out_hotel").on("click", function () {
-    //         $("#check_in_hotel_d").trigger("click");
-    //     });
-
-    //     $("#check_in_hotel").val("{{ request()->check_in }}");
-    //     $("#check_out_hotel").val("{{ request()->check_out }}");
-    //     $("#check_in_hotel_d").val("{{ request()->check_in_d }}");
-    //     $("#check_out_hotel_d").val("{{ request()->check_out_d }}");
-    // });
-
-
-
-    // document.addEventListener('DOMContentLoaded', function () {
-    //   // console.log("Initializing Flatpickr for check-in and check-out");
-
-    //   // Initialize Flatpickr for Check-in
-    //   const checkInInstance = flatpickr("#check_in_hotel", {
-    //       dateFormat: "Y-m-d",
-    //       minDate: "today", // Prevent past dates
-    //       onChange: function (selectedDates, dateStr) {
-    //           // console.log("Check-in selected:", dateStr);
-
-    //           const checkOutInput = document.querySelector("#check_out_hotel");
-    //           const checkOutInstance = checkOutInput._flatpickr;
-
-    //           if (checkOutInstance) {
-    //               // Update minDate for check-out to be the same as the check-in date
-    //               checkOutInstance.set("minDate", dateStr);
-
-    //               // Auto-adjust check-out date if it's earlier than the new minDate
-    //               const selectedCheckOutDate = checkOutInstance.selectedDates[0];
-    //               if (!selectedCheckOutDate || new Date(selectedCheckOutDate) < new Date(dateStr)) {
-    //                   // Set check-out to be one day after the check-in date
-    //                   const newCheckOutDate = new Date(dateStr);
-    //                   // newCheckOutDate.setDate(newCheckOutDate.getDate() + 1);
-    //                   // checkOutInstance.setDate(newCheckOutDate); // Update check-out date
-    //                   // console.log("Auto-set check-out date to:", newCheckOutDate.toISOString().split('T')[0]);
-    //               }
-    //           }
-    //       }
-    //   });
-
-    //   // Initialize Flatpickr for Check-out
-    //   const checkOutInstance = flatpickr("#check_out_hotel", {
-    //       dateFormat: "Y-m-d",
-    //       minDate: "today", // Default minDate is today
-    //   });
-
-    //   // console.log("Flatpickr initialized for check-in and check-out");
-    // });
 </script>
 
 <script>
@@ -1907,7 +1685,6 @@
                 myDiv.classList.toggle('activesidemybb');
             });
         }
-
 
         // Close button inside div
         if (closeBtn) {

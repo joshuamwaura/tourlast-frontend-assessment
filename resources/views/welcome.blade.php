@@ -57,13 +57,6 @@
         display: block;
     }
 
-    /* Sections */
-    /* .offer_hotel_sec,
-    .popular_attractions_sec,
-    .tour_packages_sec,
-    .why_choose_sec {
-        padding: 70px 0;
-    } */
     .offer_hotel_sec {
         margin-top: 20px;
     }
@@ -138,47 +131,6 @@
         font-weight: 700;
         margin: 0;
     }
-
-    /* Popular Hotel/Apartment Cards - Grid Style */
-    /* .popular_grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-        gap: 25px;
-        margin-top: 30px;
-    }
-
-    .popular_item {
-        background: white;
-        border-radius: 12px;
-        overflow: hidden;
-        box-shadow: 0 4px 18px rgba(0, 0, 0, 0.08);
-        transition: all 0.3s ease;
-    }
-
-    .popular_item:hover {
-        transform: translateY(-6px);
-        box-shadow: 0 8px 28px rgba(0, 0, 0, 0.15);
-    }
-
-    .popular_item_img {
-        height: 200px;
-        overflow: hidden;
-    }
-
-    .popular_item_img img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        transition: transform 0.4s ease;
-    }
-
-    .popular_item:hover .popular_item_img img {
-        transform: scale(1.1);
-    }
-
-    .popular_item_content {
-        padding: 18px;
-    } */
 
     .item_rating {
         display: flex;
@@ -612,19 +564,6 @@
 
     }
 
-    /* .offer-card {
-    position: relative;
-    height: 100%;
-    overflow: hidden;
-    border-radius: 14px;
-}
-
-.offer-card img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-} */
-
     /* Button overlay */
     .offer-btn {
         position: absolute;
@@ -858,7 +797,6 @@
         use Illuminate\Support\Facades\Storage;
 
         $hotels = collect(json_decode(Storage::get('/hotels.json'), true));
-        //dd($hotels);
         $rooms = collect(json_decode(Storage::get('/hotel_rooms.json'), true));
         $images = collect(json_decode(Storage::get('/hotel_images.json'), true));
         $ptAmenities = collect(json_decode(Storage::get('/pt_amenities.json'), true));
@@ -904,9 +842,6 @@
                 <h2>Save More, Stay Comfortably</h2>
                 <p>Find exclusive deals and save on every apartment booking</p>
             </div>
-
-            <!-- banner tabs / form placeholder (keep markup you already have) -->
-
         </div>
     </div>
 </section>
@@ -943,26 +878,6 @@
         </div>
     </div>
 </section>
-
-{{-- <section class="offer_hotel_sec">
-    <div class="container">
-        <div class="offer-card-row">
-
-            <div class="offer-card-wrapper">
-                <div class="offer-card">
-                    <img src="{{ asset('booking/img/banner2.png') }}" alt="Offer Image">
-                </div>
-            </div>
-
-            <div class="offer-card-wrapper">
-                <div class="offer-card">
-                    <img src="{{ asset('booking/img/banner3.png') }}" alt="Offer Image">
-                </div>
-            </div>
-
-        </div>
-    </div>
-</section> --}}
 <section class="offer_hotel_sec">
     <div class="container">
 
@@ -1311,18 +1226,6 @@
                 <h3>24/7 Support You Can Rely On</h3>
                 <p>Our multilingual support team is available anytime, anywhere, ready to help whenever you need it.</p>
             </div>
-
-            <!-- Card 5 (you can add if needed) -->
-            <!--
-            <div class="trust-card">
-                <div class="icon">
-                    <img src="{{ asset('booking/img/icons/trust-5.png') }}" alt="Another Feature" class="icon-img">
-                </div>
-                <h3>Another Great Feature</h3>
-                <p>Description here...</p>
-            </div>
-            -->
-
         </div>
     </div>
 </section>
@@ -1468,10 +1371,6 @@
     // Init
     updateArrows();
     grid.addEventListener('scroll', updateArrows);
-
-
-
-
 
     function toggleLike(e, btn) {
         e.preventDefault();
