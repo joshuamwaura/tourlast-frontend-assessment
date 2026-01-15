@@ -375,17 +375,6 @@
     $childrenAges = session('children_ages', []); // default empty array
     $childrenAgesApartment = session('children_agesApartment', []); // default empty array
 @endphp
-<script>
-    // document.addEventListener("DOMContentLoaded", function () {
-
-    //       document.getElementById("pageLoader").style.display = "block";
-
-    //       // Hide the loader after the page has fully loaded
-    //       window.onload = function () {
-    //           document.getElementById("pageLoader").style.display = "none";
-    //       };
-    //   });
-</script>
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-element-bundle.min.js"></script>
 <script src="{{ asset('booking/js/jquery.min.js') }}"></script>
@@ -398,7 +387,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-daterangepicker/3.1/daterangepicker.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.40/moment-timezone-with-data.min.js"></script>
 
-{{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script> --}}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/ion-rangeslider/2.3.0/js/ion.rangeSlider.min.js"></script>
@@ -515,10 +503,6 @@
             });
         }
     });
-
-
-
-
 
     $(document).ready(function() {
         $(".currency-item").on("click", function() {
@@ -681,7 +665,6 @@
         },
     });
 
-
     var swiper = new Swiper(".popularfeatures_sld", {
         slidesPerView: 5,
         spaceBetween: 30,
@@ -724,10 +707,6 @@
         slidesPerView: 3,
         spaceBetween: 30,
         loop: true,
-        // autoplay: {
-        //     delay: 1900,
-        //     disableOnInteraction: false,
-        // },
         pagination: {
             el: ".swiper-pagination",
             clickable: true,
@@ -973,7 +952,6 @@
             if (attractionsApartment) attractionsApartment.style.display = 'block';
             if (apartmentPopularQuery) apartmentPopularQuery.style.display = 'block';
         }
-
     }
 
     window.addEventListener('DOMContentLoaded', () => {
@@ -1040,7 +1018,6 @@
         });
     });
 
-
     $(document).ready(function() {
         $('.edit_icon_2').on('click', function() {
             let editIcon = $(this);
@@ -1094,8 +1071,6 @@
             input.val('').val(value); // Moves the cursor to the end of the current value
         });
     });
-
-
 
     $(document).ready(function() {
         // Toggle password visibility when eye icon is clicked
@@ -1250,7 +1225,6 @@
             });
         });
     });
-
 
     $(document).ready(function() {
         const verifyButton = $('#verify-otp-button');

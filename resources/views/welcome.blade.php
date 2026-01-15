@@ -173,13 +173,6 @@
         color: var(--primary-blue);
     }
 
-    /* Carousel wrapper */
-    /* .popular-carousel {
-    position: relative;
-    display: flex;
-    align-items: center;
-} */
-
     /* Make grid scrollable horizontally */
     /* Carousel wrapper */
     .popular-carousel {
@@ -655,27 +648,17 @@
         }
     }
 
-    /* .p-20 {
-        padding: 70px 0;
-    } */
-
     .p-0 {
         padding: 0;
     }
 
-    /* a {
-    text-decoration: none;
-} */
-
     .app-promo-modern {
         padding: 90px 0;
-        /* background: linear-gradient(135deg, #f8fafc, #eef2f7); */
         position: relative;
 
         opacity: 90%;
         background-color: #0c5295;
         overflow: hidden;
-        /* background-color: var(--primary); */
         background-image: url('/booking/img/sahara_image 1.png');
         background-size: cover;
         background-position: center;
@@ -786,7 +769,6 @@
             margin-top: 40px;
         }
     }
-
 
     .attractionsApartment {
         padding-bottom: 40px;
