@@ -17,7 +17,7 @@ Each hotel should be displayed as a **card** with the following information:
 - Number of reviews
 - Minimum price (starting price)
 - Thumbnail image of the hotel
-- Optional: like/favorite button for user interaction
+- Bonus: like/favorite button for user interaction
 
 **Notes:**
 
@@ -39,9 +39,8 @@ Additional requirements:
 
 ---
 
-### 3. Design & Visual Guidelines
+### 3. Design & Visual Guidelines (Bonus)
 
-- Use high-quality, engaging images for the hotels
 - Highlight key details prominently:
   - Hotel name and rating should be visible at first glance
   - Price should be clearly displayed
@@ -54,11 +53,7 @@ Additional requirements:
 
 ### 4. Responsiveness
 
-The section must be fully responsive:
-
-- **Desktop:** multiple cards visible (4–5 per row)
-- **Tablet:** medium number of cards (2–3 per row)
-- **Mobile:** single card per view with horizontal scrolling
+The section must be fully responsive. We give you the liberty to implement responsiveness as you wish. During the interview we will ask you how you implemented this.
 
 ---
 
@@ -66,7 +61,6 @@ The section must be fully responsive:
 
 - Display badges for “Popular” or “Top Rated” hotels
 - Implement smooth transition animations for carousel movements
-- Include an accessible design (ARIA attributes, keyboard navigation)
 
 ---
 
@@ -82,7 +76,7 @@ The section should pull hotel data via **JSON** for testing. JSON files will be 
 - `minimum_price`
 - `thumbnail`
 
-**Notes:**
+**Notes (Bonus):**
 
 - Ensure proper handling when no data is available:
   - Display placeholders or fallback messages/images
