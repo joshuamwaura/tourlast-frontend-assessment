@@ -958,30 +958,38 @@
 
             <div class="popular-carousel">
 
+                <!-- Left arrow -->
                 <button class="popular-arrow left" onclick="scrollPopular(-1)">
                     <i class="fa-solid fa-chevron-left"></i>
                 </button>
 
                 <div class="popular_grid" id="popularGrid">
                     @foreach ($hotelPopularQuery as $hotel)
-                        <div class="popular_item loading">
-                            <div class="popular_item_img skeleton">
+                        <div class="popular_item">
+                            <div class="popular_item_img">
+                                <img src="{{ $hotel['images'][0]['url'] ?? '/booking/img/fallback.jpg' }}"
+                                    alt="{{ $hotel['name'] ?? 'Hotel' }}">
+                                <button class="like-btn" onclick="toggleLike(event, this)">
+                                    <i class="fa-regular fa-heart"></i>
+                                </button>
                             </div>
 
                             <div class="popular_item_content">
-                                <div class="item_rating skeleton-text short"></div>
-                                <div class="skeleton-text long"></div>
-                                <div class="skeleton-text medium"></div>
-
-                                <div class="item_price" style="display: flex; align-items: center; gap: 10px;">
-                                    <div class="skeleton-text circle"></div>
-                                    <div class="skeleton-text short"></div>
+                                <h5>{{ $hotel['name'] ?? 'Unnamed Hotel' }}</h5>
+                                <div class="item_rating">
+                                    <span class="stars">★{{ $hotel['rating_star'] ?? 0 }}</span>
+                                    <span>({{ rand(10, 500) }} reviews)</span>
+                                </div>
+                                <div class="item_price">
+                                    <span>From</span>
+                                    <strong>${{ number_format($hotel['rooms'][0]['main_price'] ?? 0, 0) }}</strong>
                                 </div>
                             </div>
                         </div>
                     @endforeach
                 </div>
 
+                <!-- Right arrow -->
                 <button class="popular-arrow right" onclick="scrollPopular(1)">
                     <i class="fa-solid fa-chevron-right"></i>
                 </button>
@@ -989,6 +997,7 @@
             </div>
         </div>
     </section>
+
 @endif
 
 <section class="attractionsApartment" id="attractionsApartment">
