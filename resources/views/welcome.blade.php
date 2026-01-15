@@ -1067,30 +1067,20 @@
 
                 <div class="popular_grid" id="popularGrid">
                     @foreach ($hotelPopularQuery as $hotel)
-                        <div class="popular_item">
-                            <a href="#">
-                                <div class="popular_item_img">
-                                    <img src="{{ asset($hotel['thumbnail']) }}" alt="{{ $hotel['hotel_name'] }}">
+                        <div class="popular_item loading">
+                            <div class="popular_item_img skeleton">
+                            </div>
 
-                                    <button type="button" class="like-btn">
-                                        <i class="fa-regular fa-heart"></i>
-                                    </button>
+                            <div class="popular_item_content">
+                                <div class="item_rating skeleton-text short"></div>
+                                <div class="skeleton-text long"></div>
+                                <div class="skeleton-text medium"></div>
+
+                                <div class="item_price" style="display: flex; align-items: center; gap: 10px;">
+                                    <div class="skeleton-text circle"></div>
+                                    <div class="skeleton-text short"></div>
                                 </div>
-
-                                <div class="popular_item_content">
-                                    <div class="item_rating">
-                                        <span class="stars">★ {{ $hotel['rating_star'] }}/5</span>
-                                        <span>{{ $hotel['reviews_count'] ?? rand(10, 80) }} reviews</span>
-                                    </div>
-
-                                    <h5>{{ $hotel['hotel_name'] }}</h5>
-
-                                    <div class="item_price">
-                                        <span class="label">From</span>
-                                        <span class="price">${{ number_format($hotel['minimum_price'], 0) }}</span>
-                                    </div>
-                                </div>
-                            </a>
+                            </div>
                         </div>
                     @endforeach
                 </div>
