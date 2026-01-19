@@ -7,6 +7,30 @@
 
 <link rel="stylesheet" href="{{ asset('booking/css/style.css') }}" />
 <style>
+    .badge {
+        position: absolute;
+        top: 12px;
+        left: 12px;
+        padding: 6px 12px;
+        border-radius: 6px;
+        color: #fff;
+        font-size: 0.75rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        z-index: 4;
+    }
+
+    .badge.popular {
+        background-color: #FF6B35;
+        /* orange */
+    }
+
+    .badge.top-rated {
+        background-color: #0A4D8C;
+        /* blue */
+    }
+
+
     .cart_tittle h4 {
         font-size: 1.6rem;
         font-weight: 700;
@@ -948,48 +972,57 @@
 </section>
 
 @if ($hotelPopularQuery && $hotelPopularQuery->isNotEmpty())
-    <section id="hotelPopularQuery">
-        <div class="container">
+<section id="hotelPopularQuery">
+    <div class="container">
 
-            <div class="main_tiltle">
-                <h3>Popular Attractions</h3>
-                <p>Explore, book, save – best hotels worldwide</p>
-            </div>
-
-            <div class="popular-carousel">
-
-                <button class="popular-arrow left" onclick="scrollPopular(-1)">
-                    <i class="fa-solid fa-chevron-left"></i>
-                </button>
-
-                <div class="popular_grid" id="popularGrid">
-                    @foreach ($hotelPopularQuery as $hotel)
-                        <div class="popular_item loading">
-                            <div class="popular_item_img skeleton">
-                            </div>
-
-                            <div class="popular_item_content">
-                                <div class="item_rating skeleton-text short"></div>
-                                <div class="skeleton-text long"></div>
-                                <div class="skeleton-text medium"></div>
-
-                                <div class="item_price" style="display: flex; align-items: center; gap: 10px;">
-                                    <div class="skeleton-text circle"></div>
-                                    <div class="skeleton-text short"></div>
-                                </div>
-                            </div>
-                        </div>
-                    @endforeach
-                </div>
-
-                <button class="popular-arrow right" onclick="scrollPopular(1)">
-                    <i class="fa-solid fa-chevron-right"></i>
-                </button>
-
-            </div>
+        <!-- Heading -->
+        <div class="main_tiltle">
+            <h3>Popular Attractions</h3>
+            <p>Explore, book, save – best hotels worldwide</p>
         </div>
-    </section>
+
+        <!-- Responsive grid -->
+        <div class="popular_grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 25px;">
+            @foreach ($hotelPopularQuery as $hotel)
+                <div class="popular_item">
+                    <div class="popular_item_img" style="position: relative;">
+                        <img src="{{ $hotel['thumbnail'] ?? '/booking/img/fallback.jpg' }}"
+                             alt="{{ $hotel['name'] ?? 'Hotel' }}" style="width: 100%; height: 200px; object-fit: cover; border-radius: 12px;">
+
+                        <!-- Like Button -->
+                        <button class="like-btn" onclick="toggleLike(event, this)" style="position: absolute; top: 12px; right: 12px;">
+                            <i class="fa-regular fa-heart"></i>
+                        </button>
+
+                        <!-- Badges -->
+                        @if (!empty($hotel['is_popular']) && $hotel['is_popular'] == 1)
+                            <div class="badge popular" style="position: absolute; top: 12px; left: 12px;">Popular</div>
+                        @endif
+                        @if (!empty($hotel['rating_star']) && $hotel['rating_star'] >= 4)
+                            <div class="badge top-rated" style="position: absolute; top: 40px; left: 12px;">Top Rated</div>
+                        @endif
+                    </div>
+
+                    <div class="popular_item_content" style="padding: 15px;">
+                        <h5>{{ $hotel['hotel_name'] ?? 'Unnamed Hotel' }}</h5>
+                        <div class="item_rating" style="display: flex; align-items: center; gap: 5px; margin: 5px 0;">
+                            <span class="stars">★{{ $hotel['rating_star'] ?? 0 }}</span>
+                            <span>({{ rand(10, 500) }} reviews)</span>
+                        </div>
+                        <div class="item_price" style="display: flex; justify-content: space-between; align-items: center;">
+                            <span>From</span>
+                            <strong>${{ number_format($hotel['minimum_price'] ?? 0, 0) }}</strong>
+                        </div>
+                    </div>
+                </div>
+            @endforeach
+        </div>
+
+    </div>
+</section>
 @endif
+
+
 
 <section class="attractionsApartment" id="attractionsApartment">
     <div class="container">
